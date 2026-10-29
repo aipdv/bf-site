@@ -34,8 +34,8 @@ const download = 'https://github.com/aipdv/better-files/releases/latest';
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content="https://bf.aipdv.com/og.png" />
-    <!-- Hide GSAP reveal targets before first paint, only when motion is allowed. Undo after 2.5 s if GSAP never loads. -->
-    <script is:inline>(()=>{const r=document.documentElement;if(matchMedia('(prefers-reduced-motion: no-preference)').matches){r.classList.add('motion');setTimeout(()=>{if(!r.classList.contains('motion-ready'))r.classList.remove('motion')},2500)}})()</script>
+    <!-- "js": GSAP will run. "full": the visitor allows self-running motion. Undo both after 2.5 s if GSAP never loads. -->
+    <script is:inline>(()=>{const r=document.documentElement;r.classList.add('js');if(matchMedia('(prefers-reduced-motion: no-preference)').matches)r.classList.add('full');setTimeout(()=>{if(!r.classList.contains('motion-ready'))r.classList.remove('js','full')},2500)})()</script>
   </head>
   <body>
     <div class="edge" aria-hidden="true"></div>
@@ -48,6 +48,7 @@ const download = 'https://github.com/aipdv/better-files/releases/latest';
       <a class="btn p sm" href={download}>Download</a>
     </nav>
 
+    <div id="smooth-wrapper"><div id="smooth-content">
     <main>
       {fm ? <article class="prose"><slot /></article> : <slot />}
     </main>
@@ -60,6 +61,7 @@ const download = 'https://github.com/aipdv/better-files/releases/latest';
         <p class="links"><a href="/privacy/">Privacy</a><a href="https://github.com/aipdv/better-files">GitHub</a><a href={download}>Download</a></p>
       </div>
     </footer>
+    </div></div>
 
     <!-- Cloudflare Web Analytics: no cookies. -->
     <script is:inline defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "dcb9b799222e4caf9691b680f89f83a9"}'></script>
