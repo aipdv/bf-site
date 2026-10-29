@@ -47,6 +47,7 @@ document.querySelectorAll<HTMLAnchorElement>('a[href="/"]').forEach((a) => {
     } else {
       smoother.scrollTo(0, true);
     }
+    history.replaceState(null, '', location.pathname + location.search);
   });
 });
 
@@ -145,6 +146,9 @@ if (box && video) {
     video.muted = !video.muted;
     sound.textContent = video.muted ? 'Tap for sound' : 'Sound on';
     if (video.paused && !userPaused) video.play().catch(() => {});
+  });
+  document.addEventListener('fullscreenchange', () => {
+    fs.setAttribute('aria-label', document.fullscreenElement ? 'Exit full screen' : 'Full screen');
   });
   fs.addEventListener('click', () => {
     if (document.fullscreenElement) document.exitFullscreen();
