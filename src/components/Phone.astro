@@ -1,0 +1,92 @@
+---
+// A code-built replica of a Better Files search. No images, no JS.
+// Loop: 14 s. "land records" with document hits, then "beach at sunset" with photos.
+// Slow fades only. Under prefers-reduced-motion nothing moves (seizure safety).
+---
+<div class="rp" role="img" aria-label="Better Files finds documents for the search land records, then photos for the search beach at sunset">
+  <div class="s" aria-hidden="true">
+    <div class="sb"><span>9:41</span><span>85%</span></div>
+    <div class="bar">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C4C7C5" stroke-width="2.4"><path d="M19 12H5M11 6l-6 6 6 6" /></svg>
+      <div class="q"><span class="qa">land records</span><span class="qb">beach at sunset</span></div>
+    </div>
+    <div class="scene A">
+      <div class="lbl">Found by meaning, on this phone</div>
+      <div class="row"><div class="th pdf"></div><div><div class="n">Property-papers-2023.pdf</div><div class="hit">"...<mark>khasra</mark> number and <mark>plot area</mark>..."</div></div></div>
+      <div class="row d1"><div class="th pdf"></div><div><div class="n">Mutation-certificate.pdf</div><div class="hit">"...<mark>ownership</mark> transferred to..."</div></div></div>
+      <div class="row d2"><div class="th pdf"></div><div><div class="n">scan_0412.pdf</div><div class="hit">"...<mark>land</mark> revenue receipt..."</div></div></div>
+      <div class="row d3"><div class="th"></div><div><div class="n">Tax-receipt-Q3.docx</div><div class="m">Jul 24 · 168 kB</div></div></div>
+      <div class="row d4"><div class="th pdf"></div><div><div class="n">Plot-map-final.pdf</div><div class="m">Apr 23 · 3.6 MB</div></div></div>
+    </div>
+    <div class="scene B">
+      <div class="lbl">Photos, found by what is in them</div>
+      <div class="grid3">
+        <div class="ph" style="background:linear-gradient(#F7B267 0 45%,#F4845F 45% 60%,#2D6A8F 60%)"></div>
+        <div class="ph d1" style="background:linear-gradient(#FFD6A5 0 50%,#E76F51 50% 58%,#264653 58%)"></div>
+        <div class="ph d2" style="background:linear-gradient(#F9C74F 0 40%,#F3722C 40% 55%,#277DA1 55%)"></div>
+        <div class="ph d3" style="background:linear-gradient(#FEC89A 0 55%,#F28482 55% 62%,#3D5A80 62%)"></div>
+        <div class="ph d4" style="background:linear-gradient(#FFB4A2 0 48%,#E5989B 48% 56%,#1D3557 56%)"></div>
+        <div class="ph d5" style="background:linear-gradient(#FAD2A0 0 42%,#E07A5F 42% 52%,#3D405B 52%)"></div>
+      </div>
+    </div>
+    <div class="nb"><span>☰</span><span>◯</span><span>◁</span></div>
+  </div>
+</div>
+
+<style>
+  .rp { width: 280px; max-width: 78vw; margin: 0 auto; border-radius: 46px; padding: 9px; background: #0B0B0C; box-shadow: 0 30px 80px rgba(0, 0, 0, .25); position: relative; }
+  .s { border-radius: 38px; background: #121316; height: 560px; overflow: hidden; color: #E8EAED; text-align: left; position: relative; font-family: Roboto, -apple-system, sans-serif; }
+  .sb { display: flex; justify-content: space-between; padding: 12px 22px 0; font-size: 11px; color: #C4C7C5; }
+  .bar { margin: 14px 12px 6px; background: #1F2125; border-radius: 99px; height: 40px; display: flex; align-items: center; padding: 0 14px; gap: 10px; font-size: 14px; }
+  .bar svg { flex: none; }
+  .q { position: relative; height: 20px; flex: 1; }
+  .q span { position: absolute; left: 0; top: 0; white-space: nowrap; line-height: 20px; clip-path: inset(0 100% 0 0); }
+  .lbl { font-size: 11px; color: #9AA0A6; padding: 8px 18px 4px; }
+  .scene { position: absolute; left: 0; right: 0; top: 96px; }
+  .row { display: grid; grid-template-columns: 36px minmax(0, 1fr); gap: 12px; padding: 9px 16px; opacity: 0; }
+  .th { width: 36px; height: 44px; border-radius: 6px; background: #F1F3F4; position: relative; overflow: hidden; }
+  .th::before { content: ""; position: absolute; left: 6px; right: 6px; top: 8px; height: 26px; background: repeating-linear-gradient(#C9CDD2 0 2px, transparent 2px 6px); }
+  .th.pdf::after { content: "PDF"; position: absolute; bottom: 2px; right: 3px; font-size: 7px; font-weight: 700; color: #D93025; }
+  .n { color: #E8EAED; font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .m { font-size: 11px; color: #9AA0A6; }
+  .hit { font-size: 11px; color: #BDC1C6; margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .hit mark { background: rgba(46, 127, 235, .28); color: #fff; border-radius: 3px; padding: 0 2px; }
+  .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px; padding: 4px 12px; }
+  .ph { aspect-ratio: 1; border-radius: 6px; opacity: 0; }
+  .nb { position: absolute; bottom: 0; left: 0; right: 0; height: 34px; display: flex; justify-content: space-around; align-items: center; color: #9AA0A6; font-size: 14px; background: #121316; }
+
+  /* 14 s loop. 0-50%: documents. 50-100%: photos. */
+  .A { animation: sA 14s infinite; }
+  .B { animation: sB 14s infinite; }
+  @keyframes sA { 0%, 46% { opacity: 1 } 50%, 96% { opacity: 0 } 100% { opacity: 1 } }
+  @keyframes sB { 0%, 46% { opacity: 0 } 50%, 96% { opacity: 1 } 100% { opacity: 0 } }
+  .qa { animation: tA 14s infinite; }
+  .qb { animation: tB 14s infinite; }
+  @keyframes tA {
+    0% { clip-path: inset(0 100% 0 0); animation-timing-function: steps(12, end); }
+    12%, 46% { clip-path: inset(0 0 0 0); }
+    47%, 100% { clip-path: inset(0 100% 0 0); }
+  }
+  @keyframes tB {
+    0%, 50% { clip-path: inset(0 100% 0 0); animation-timing-function: steps(15, end); }
+    63%, 96% { clip-path: inset(0 0 0 0); }
+    97%, 100% { clip-path: inset(0 100% 0 0); }
+  }
+  .A .row { animation: rA 14s infinite; }
+  .B .ph { animation: rB 14s infinite; }
+  @keyframes rA { 0%, 14% { opacity: 0; transform: translateY(6px) } 19%, 44% { opacity: 1; transform: none } 47%, 100% { opacity: 0 } }
+  @keyframes rB { 0%, 64% { opacity: 0 } 69%, 94% { opacity: 1 } 97%, 100% { opacity: 0 } }
+  .d1 { animation-delay: .25s !important; }
+  .d2 { animation-delay: .5s !important; }
+  .d3 { animation-delay: .75s !important; }
+  .d4 { animation-delay: 1s !important; }
+  .d5 { animation-delay: 1.25s !important; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .rp * { animation: none !important; }
+    .B { display: none; }
+    .A .row { opacity: 1; }
+    .q .qa { clip-path: none; }
+    .q .qb { display: none; }
+  }
+</style>
