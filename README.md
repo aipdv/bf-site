@@ -16,11 +16,14 @@ npm run preview  # serves dist/ on http://localhost:4321
 
 ## Deploy
 
-Cloudflare Pages, project `better-files`, custom domain `bf.aipdv.com`.
+Cloudflare Pages, project `better-files`, custom domain `bf.aipdv.com`. The `cf` CLI cannot deploy to Pages, so use wrangler without adding it to the project:
 
 ```sh
-cf pages deploy dist
+npm run build
+npx wrangler pages deploy dist --project-name better-files --branch main
 ```
+
+`functions/better-files-launch.mp4.js` serves the video with byte ranges. Pages static files do not support ranges, and Safari needs them to play video.
 
 ## Privacy page
 
