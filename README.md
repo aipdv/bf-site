@@ -6,7 +6,7 @@ The app: https://github.com/aipdv/better-files
 
 ## Build
 
-Astro, static output. The site ships no JavaScript of its own. The only script is the Cloudflare Web Analytics beacon (no cookies).
+Astro, static output. GSAP (with ScrollTrigger and SplitText) runs the page motion in `src/scripts/motion.ts`. All motion is slow and runs only when the visitor allows motion; with `prefers-reduced-motion` nothing moves and the video does not autoplay. The other script is the Cloudflare Web Analytics beacon (no cookies).
 
 ```sh
 npm ci
