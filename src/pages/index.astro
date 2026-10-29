@@ -9,47 +9,48 @@ const download = 'https://github.com/aipdv/better-files/releases/latest';
   description="Better Files is a free, open source file manager for Android. It searches your documents and photos by meaning, on your phone. No cloud, no account."
 >
   <section class="hero wrap">
-    <div class="eyebrow"><i></i>Open source · Android · Free beta</div>
-    <h1>Search your phone <em>by meaning.</em></h1>
-    <p class="lead">Better Files searches your documents and photos by meaning. On your phone. No cloud, no account.</p>
-    <div class="cta">
+    <div class="eyebrow" data-reveal="hero"><i></i>Open source · Android · Free beta</div>
+    <h1 data-reveal="hero">Search your phone <em>by meaning.</em></h1>
+    <p class="lead" data-reveal="hero">Better Files searches your documents and photos by meaning. On your phone. No cloud, no account.</p>
+    <div class="cta" data-reveal="hero">
       <a class="btn p" href={download}>Download APK</a>
       <a class="btn v" href="#video"><b></b>Watch the video <small>2:23</small></a>
     </div>
     <div class="stage">
-      <div class="chip c1"><b>By meaning</b><span>not by file name</span></div>
-      <div class="chip c2"><b>Files stay on the phone</b><span>search runs on the phone</span></div>
-      <div class="chip c3"><b>Docs and photos</b><span>PDF, Word, text, JPG, PNG</span></div>
-      <Phone />
+      <div class="chip c1" data-reveal="chip"><b>By meaning</b><span>not by file name</span></div>
+      <div class="chip c2" data-reveal="chip"><b>Files stay on the phone</b><span>search runs on the phone</span></div>
+      <div class="chip c3" data-reveal="chip"><b>Docs and photos</b><span>PDF, Word, text, JPG, PNG</span></div>
+      <div data-reveal="phone"><Phone /></div>
     </div>
   </section>
 
   <div class="wrap">
-    <p class="statement">You remember what's in a file. <span>Not what you named it.</span></p>
+    <p class="statement" data-reveal="words">You remember what's in a file. <span>Not what you named it.</span></p>
 
     <div class="steps">
-      <div><em>i.</em><p style="margin:0"><b>Install and accept the model.</b><span>One download of about 320 MB. Photo search needs 110 MB more.</span></p></div>
-      <div><em>ii.</em><p style="margin:0"><b>It reads your files on the phone.</b><span>Newest files first. On older phones, the first index takes hours.</span></p></div>
-      <div><em>iii.</em><p style="margin:0"><b>Search in your own words.</b><span>"land records", "beach at sunset". In English, Hindi or Hinglish.</span></p></div>
+      <div data-reveal="up"><em>i.</em><p style="margin:0"><b>Install and accept the model.</b><span>One download of about 320 MB. Photo search needs 110 MB more.</span></p></div>
+      <div data-reveal="up"><em>ii.</em><p style="margin:0"><b>It reads your files on the phone.</b><span>Newest files first. On older phones, the first index takes hours.</span></p></div>
+      <div data-reveal="up"><em>iii.</em><p style="margin:0"><b>Search in your own words.</b><span>"land records", "beach at sunset". In English, Hindi or Hinglish.</span></p></div>
     </div>
 
     <section class="sec" id="features">
       <h2>What it does</h2>
       <p class="sub">A full file manager, with a search that understands what is inside your files.</p>
       <div class="cards">
-        <div class="card"><h3>Search by meaning</h3><p>Type "rent agreement" or "beach at sunset". It finds the file even when the name says nothing like that.</p></div>
-        <div class="card"><h3>Stays on your phone</h3><p>The search model and the index live on the device. Your files, names and searches never leave it.</p></div>
-        <div class="card"><h3>A full file manager</h3><p>Archives, root access, SMB, SFTP, FTP and WebDAV, themes. Built on Material Files.</p></div>
+        <div class="card" data-reveal="up"><h3>Search by meaning</h3><p>Type "rent agreement" or "beach at sunset". It finds the file even when the name says nothing like that.</p></div>
+        <div class="card" data-reveal="up"><h3>Stays on your phone</h3><p>The search model and the index live on the device. Your files, names and searches never leave it.</p></div>
+        <div class="card" data-reveal="up"><h3>A full file manager</h3><p>Archives, root access, SMB, SFTP, FTP and WebDAV, themes. Built on Material Files.</p></div>
       </div>
     </section>
 
-    <section class="sec" id="video">
+    <section class="sec vid" id="video">
       <h2>See it work</h2>
       <p class="sub">A real search on a six-year-old phone. 2:23.</p>
       <div class="video">
-        <video controls preload="none" poster="/video-poster.jpg" playsinline>
+        <video controls muted loop playsinline preload="none" poster="/video-poster.jpg">
           <source src="/better-files-launch.mp4" type="video/mp4" />
         </video>
+        <button class="sound" type="button">Tap for sound</button>
       </div>
     </section>
 
@@ -57,9 +58,9 @@ const download = 'https://github.com/aipdv/better-files/releases/latest';
       <h2>Private by design</h2>
       <p class="sub">There is no account and no server of ours to send your files to.</p>
       <div class="cards">
-        <div class="card"><h3>Nothing leaves</h3><p>Your files, file names, folders and searches never leave your phone.</p></div>
-        <div class="card"><h3>Analytics are off</h3><p>They stay off until you turn them on. If you do, only anonymous usage counts go to PostHog in the EU.</p></div>
-        <div class="card"><h3>No tracking</h3><p>No ads, no advertising ID, no Google Play Services. Read the <a href="/privacy/">privacy policy</a>.</p></div>
+        <div class="card" data-reveal="up"><h3>Nothing leaves</h3><p>Your files, file names, folders and searches never leave your phone.</p></div>
+        <div class="card" data-reveal="up"><h3>Analytics are off</h3><p>They stay off until you turn them on. If you do, only anonymous usage counts go to PostHog in the EU.</p></div>
+        <div class="card" data-reveal="up"><h3>No tracking</h3><p>No ads, no advertising ID, no Google Play Services. Read the <a href="/privacy/">privacy policy</a>.</p></div>
       </div>
     </section>
 
@@ -67,7 +68,7 @@ const download = 'https://github.com/aipdv/better-files/releases/latest';
       <h2>Before you install</h2>
       <p class="sub">This is a beta. Here is what to expect.</p>
       <div class="two">
-        <div class="card">
+        <div class="card" data-reveal="up">
           <h3>Requirements</h3>
           <ul>
             <li>Android 10 or newer.</li>
@@ -75,7 +76,7 @@ const download = 'https://github.com/aipdv/better-files/releases/latest';
             <li>Meaning search and photo search need about 3.5 GB of RAM. Phones with less search inside documents by keyword.</li>
           </ul>
         </div>
-        <div class="card">
+        <div class="card" data-reveal="up">
           <h3>Known limits</h3>
           <ul>
             <li>The first index takes hours on older phones. You can search files as soon as they are done.</li>
@@ -96,3 +97,7 @@ const download = 'https://github.com/aipdv/better-files/releases/latest';
     </section>
   </div>
 </Base>
+
+<script>
+  import '../scripts/motion.ts';
+</script>
