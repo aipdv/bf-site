@@ -163,13 +163,31 @@ if (box && video) {
     sound.textContent = video.muted ? 'Tap for sound' : 'Sound on';
     if (video.paused && !userPaused) video.play().catch(() => {});
   });
+  const fullscreenEnded = () => {
+    video.controls = false;
+    fs.setAttribute('aria-label', 'Full screen');
+  };
   document.addEventListener('fullscreenchange', () => {
-    fs.setAttribute('aria-label', document.fullscreenElement ? 'Exit full screen' : 'Full screen');
+    if (document.fullscreenElement) fs.setAttribute('aria-label', 'Exit full screen');
+    else fullscreenEnded();
   });
+  video.addEventListener('webkitendfullscreen', fullscreenEnded);
   fs.addEventListener('click', () => {
     if (document.fullscreenElement) document.exitFullscreen();
-    else if (box.requestFullscreen) box.requestFullscreen();
-    else (video as HTMLVideoElement & { webkitEnterFullscreen?: () => void }).webkitEnterFullscreen?.();
+    else {
+      video.controls = true;
+      if (video.requestFullscreen) {
+        video.requestFullscreen().catch(fullscreenEnded);
+      } else {
+        const enterFullscreen = (video as HTMLVideoElement & { webkitEnterFullscreen?: () => void }).webkitEnterFullscreen;
+        if (enterFullscreen) {
+          fs.setAttribute('aria-label', 'Exit full screen');
+          enterFullscreen.call(video);
+        } else {
+          fullscreenEnded();
+        }
+      }
+    }
   });
 }
 
