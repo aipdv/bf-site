@@ -52,7 +52,16 @@ const download = 'https://github.com/aipdv/better-files/releases/latest';
         <video controls muted loop playsinline preload="none" poster="/video-poster.jpg">
           <source src="/better-files-launch.mp4" type="video/mp4" />
         </video>
-        <button class="sound" type="button">Tap for sound</button>
+        <div class="vctl">
+          <button class="vbtn pp" type="button" aria-label="Pause" hidden>
+            <svg class="i-pause" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><rect x="3" y="2" width="3.5" height="12" rx="1" fill="currentColor" /><rect x="9.5" y="2" width="3.5" height="12" rx="1" fill="currentColor" /></svg>
+            <svg class="i-play" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9.5-5.5z" fill="currentColor" /></svg>
+          </button>
+          <button class="vbtn fs" type="button" aria-label="Full screen">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M2 6V2h4M10 2h4v4M14 10v4h-4M6 14H2v-4" /></svg>
+          </button>
+          <button class="sound" type="button">Tap for sound</button>
+        </div>
       </div>
     </section>
 
