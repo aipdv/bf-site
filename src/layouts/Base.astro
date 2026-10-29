@@ -34,6 +34,8 @@ const download = 'https://github.com/aipdv/better-files/releases/latest';
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content="https://bf.aipdv.com/og.png" />
+    <!-- Hide GSAP reveal targets before first paint, only when motion is allowed. Undo after 2.5 s if GSAP never loads. -->
+    <script is:inline>(()=>{const r=document.documentElement;if(matchMedia('(prefers-reduced-motion: no-preference)').matches){r.classList.add('motion');setTimeout(()=>{if(!r.classList.contains('motion-ready'))r.classList.remove('motion')},2500)}})()</script>
   </head>
   <body>
     <div class="edge" aria-hidden="true"></div>
