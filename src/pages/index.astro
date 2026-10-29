@@ -9,6 +9,7 @@ const download = 'https://github.com/aipdv/better-files/releases/latest';
   description="Better Files is a free, open source file manager for Android. It searches your documents and photos by meaning, on your phone. No cloud, no account."
 >
   <section class="hero wrap">
+    <div class="hero-copy">
     <div class="eyebrow" data-reveal="hero"><i></i>Open source · Android · Free beta</div>
     <h1 data-reveal="hero">Search your phone <em>by meaning.</em></h1>
     <p class="lead" data-reveal="hero">Better Files searches your documents and photos by meaning. On your phone. No cloud, no account.</p>
@@ -16,11 +17,12 @@ const download = 'https://github.com/aipdv/better-files/releases/latest';
       <a class="btn p" href={download}>Download APK</a>
       <a class="btn v" href="#video"><b></b>Watch the video <small>2:23</small></a>
     </div>
-    <div class="stage">
+    </div>
+    <div class="stage" data-stage>
       <div class="chip c1" data-reveal="chip"><b>By meaning</b><span>not by file name</span></div>
       <div class="chip c2" data-reveal="chip"><b>Files stay on the phone</b><span>search runs on the phone</span></div>
       <div class="chip c3" data-reveal="chip"><b>Docs and photos</b><span>PDF, Word, text, JPG, PNG</span></div>
-      <div data-reveal="phone"><Phone /></div>
+      <Phone />
     </div>
   </section>
 
