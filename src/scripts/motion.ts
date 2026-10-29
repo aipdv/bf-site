@@ -30,14 +30,23 @@ document.querySelectorAll<HTMLAnchorElement>('a[href^="#"], a[href^="/#"]').forE
     if (!target) return;
     e.preventDefault();
     // Full-screen sections (the video) align to the top; others clear the navbar.
-    smoother.scrollTo(target, true, target.classList.contains('vid') ? 'top top' : `top ${NAV}px`);
+    const offsetY = target.classList.contains('vid') ? 0 : NAV;
+    if (ScrollTrigger.isTouch === 1) {
+      gsap.to(window, { duration: 1, ease: 'power2.inOut', scrollTo: { y: target, offsetY } });
+    } else {
+      smoother.scrollTo(target, true, offsetY ? `top ${offsetY}px` : 'top top');
+    }
     history.replaceState(null, '', id);
   });
 });
 document.querySelectorAll<HTMLAnchorElement>('a[href="/"]').forEach((a) => {
   a.addEventListener('click', (e) => {
     e.preventDefault();
-    smoother.scrollTo(0, true);
+    if (ScrollTrigger.isTouch === 1) {
+      gsap.to(window, { duration: 1, ease: 'power2.inOut', scrollTo: { y: 0, offsetY: 0 } });
+    } else {
+      smoother.scrollTo(0, true);
+    }
   });
 });
 
@@ -122,8 +131,14 @@ if (box && video) {
     },
   });
   video.addEventListener('click', () => {
-    if (pp.hidden) pp.hidden = false;
-    else toggle();
+    if (video.paused && !userPaused) {
+      pp.hidden = false;
+      video.play().catch(() => {});
+    } else if (!video.paused && pp.hidden) {
+      pp.hidden = false;
+    } else {
+      toggle();
+    }
   });
   pp.addEventListener('click', toggle);
   sound.addEventListener('click', () => {
