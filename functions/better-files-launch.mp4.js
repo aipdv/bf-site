@@ -44,8 +44,13 @@ export async function onRequest({ request, env }) {
   const asset = await env.ASSETS.fetch(new URL(request.url));
   if (!asset.ok) return asset;
 
-  const size = Number(asset.headers.get('Content-Length'));
-  if (!Number.isSafeInteger(size) || size < 0) {
+  const contentLength = asset.headers.get('Content-Length');
+  let size = Number(contentLength);
+  let bufferedBody;
+  if (contentLength === null || contentLength.trim() === '' || size === 0) {
+    bufferedBody = await asset.arrayBuffer();
+    size = bufferedBody.byteLength;
+  } else if (!Number.isSafeInteger(size) || size < 0) {
     await asset.body?.cancel();
     return new Response(null, { status: 502 });
   }
@@ -58,20 +63,23 @@ export async function onRequest({ request, env }) {
   const m = /^bytes=(\d*)-(\d*)$/.exec(request.headers.get('Range') || '');
   if (!m || (m[1] === '' && m[2] === '')) {
     headers.set('Content-Length', String(size));
-    if (request.method === 'HEAD') await asset.body?.cancel();
-    return new Response(request.method === 'HEAD' ? null : asset.body, { status: 200, headers });
+    if (request.method === 'HEAD' && !bufferedBody) await asset.body?.cancel();
+    return new Response(request.method === 'HEAD' ? null : bufferedBody ?? asset.body, { status: 200, headers });
   }
 
   // "bytes=a-b", "bytes=a-" or the suffix form "bytes=-n".
   let start = m[1] === '' ? Math.max(0, size - Number(m[2])) : Number(m[1]);
   let end = m[1] === '' || m[2] === '' ? size - 1 : Math.min(Number(m[2]), size - 1);
   if (start > end || start >= size) {
-    await asset.body?.cancel();
+    if (!bufferedBody) await asset.body?.cancel();
     headers.set('Content-Range', `bytes */${size}`);
     return new Response(null, { status: 416, headers });
   }
   headers.set('Content-Range', `bytes ${start}-${end}/${size}`);
   headers.set('Content-Length', String(end - start + 1));
-  if (request.method === 'HEAD') await asset.body?.cancel();
-  return new Response(request.method === 'HEAD' ? null : sliceStream(asset.body, start, end), { status: 206, headers });
+  if (request.method === 'HEAD' && !bufferedBody) await asset.body?.cancel();
+  const body = bufferedBody
+    ? bufferedBody.slice(start, end + 1)
+    : sliceStream(asset.body, start, end);
+  return new Response(request.method === 'HEAD' ? null : body, { status: 206, headers });
 }
