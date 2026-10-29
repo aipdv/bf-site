@@ -87,10 +87,26 @@ ScrollTrigger.batch('[data-reveal="up"]', {
 });
 
 // Video: no controls bar. It grows into place, plays muted while in view, pauses outside.
+// The first click on the playing video shows a pause button. A video paused by hand stays paused.
 const box = document.querySelector<HTMLElement>('.video');
 const video = box?.querySelector('video');
-const sound = box?.querySelector<HTMLButtonElement>('.sound');
 if (box && video) {
+  const sound = box.querySelector<HTMLButtonElement>('.sound')!;
+  const pp = box.querySelector<HTMLButtonElement>('.pp')!;
+  const fs = box.querySelector<HTMLButtonElement>('.fs')!;
+  let userPaused = false;
+  const toggle = () => {
+    userPaused = !video.paused;
+    if (video.paused) video.play().catch(() => {});
+    else video.pause();
+  };
+  const sync = () => {
+    pp.classList.toggle('paused', video.paused);
+    pp.setAttribute('aria-label', video.paused ? 'Play' : 'Pause');
+  };
+  video.addEventListener('play', sync);
+  video.addEventListener('pause', sync);
+
   video.controls = false;
   gsap.fromTo(box, { scale: 0.82 }, {
     scale: 1, ease: 'none',
@@ -100,13 +116,25 @@ if (box && video) {
     trigger: box,
     start: 'top 75%',
     end: 'bottom 25%',
-    onToggle: (self) => (self.isActive ? video.play().catch(() => {}) : video.pause()),
+    onToggle: (self) => {
+      if (self.isActive && !userPaused) video.play().catch(() => {});
+      else if (!self.isActive) video.pause();
+    },
   });
-  video.addEventListener('click', () => (video.paused ? video.play() : video.pause()));
-  sound?.addEventListener('click', () => {
+  video.addEventListener('click', () => {
+    if (pp.hidden) pp.hidden = false;
+    else toggle();
+  });
+  pp.addEventListener('click', toggle);
+  sound.addEventListener('click', () => {
     video.muted = !video.muted;
     sound.textContent = video.muted ? 'Tap for sound' : 'Sound on';
-    if (video.paused) video.play().catch(() => {});
+    if (video.paused && !userPaused) video.play().catch(() => {});
+  });
+  fs.addEventListener('click', () => {
+    if (document.fullscreenElement) document.exitFullscreen();
+    else if (box.requestFullscreen) box.requestFullscreen();
+    else (video as HTMLVideoElement & { webkitEnterFullscreen?: () => void }).webkitEnterFullscreen?.();
   });
 }
 
