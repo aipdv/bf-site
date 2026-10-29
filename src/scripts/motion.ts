@@ -8,10 +8,11 @@ import { ScrollSmoother } from 'gsap/ScrollSmoother';
 import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
 import { SplitText } from 'gsap/SplitText';
 
+const selfMotion = matchMedia('(prefers-reduced-motion: no-preference)');
+const syncSelfMotion = () => document.documentElement.classList.toggle('full', selfMotion.matches);
 document.documentElement.classList.add('js');
-if (matchMedia('(prefers-reduced-motion: no-preference)').matches) {
-  document.documentElement.classList.add('full');
-}
+syncSelfMotion();
+selfMotion.addEventListener('change', syncSelfMotion);
 
 gsap.registerPlugin(ScrollTrigger, ScrollSmoother, ScrollToPlugin, SplitText);
 
@@ -110,8 +111,8 @@ if (box && video) {
   const pp = box.querySelector<HTMLButtonElement>('.pp')!;
   const fs = box.querySelector<HTMLButtonElement>('.fs')!;
   let userPaused = false;
+  let scrollPausing = false;
   const toggle = () => {
-    userPaused = !video.paused;
     if (video.paused) video.play().catch(() => {});
     else video.pause();
   };
@@ -119,8 +120,15 @@ if (box && video) {
     pp.classList.toggle('paused', video.paused);
     pp.setAttribute('aria-label', video.paused ? 'Play' : 'Pause');
   };
-  video.addEventListener('play', sync);
-  video.addEventListener('pause', sync);
+  video.addEventListener('play', () => {
+    userPaused = false;
+    sync();
+  });
+  video.addEventListener('pause', () => {
+    if (scrollPausing) scrollPausing = false;
+    else userPaused = true;
+    sync();
+  });
 
   video.controls = false;
   gsap.fromTo(box, { scale: 0.82 }, {
@@ -133,7 +141,10 @@ if (box && video) {
     end: 'bottom 25%',
     onToggle: (self) => {
       if (self.isActive && !userPaused) video.play().catch(() => {});
-      else if (!self.isActive) video.pause();
+      else if (!self.isActive && !video.paused) {
+        scrollPausing = true;
+        video.pause();
+      }
     },
   });
   video.addEventListener('click', () => {
