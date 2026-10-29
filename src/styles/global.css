@@ -140,8 +140,6 @@ main { padding-top: 84px; }
 .vctl [hidden] { display: none; }
 .pp .i-play, .pp.paused .i-pause { display: none; }
 .pp.paused .i-play { display: block; }
-.video:fullscreen { width: 100vw; height: 100vh; aspect-ratio: auto; border-radius: 0; background: #F5F5F7; }
-.video:fullscreen video { object-fit: contain; }
 
 /* GSAP reveals these. Self-running reveals hide only when the visitor allows motion. */
 .full [data-reveal="hero"], .js [data-reveal="chip"] { opacity: 0; }
