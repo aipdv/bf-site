@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Launcher icon concept: flat folder with a red badge and white plus. 108 x 108 adaptive grid;
-     all artwork stays inside the 66 dp safe circle (center 54,54, radius 33). -->
-<svg xmlns="http://www.w3.org/2000/svg" width="108" height="108" viewBox="27 22 56 56">
+     all artwork stays inside the 66 dp safe circle (center 54,54, radius 33).
+     The viewBox centers the artwork across (x 30 to 82.5) and the folder body down (y 35 to 74),
+     so the folder lines up with the text next to it. -->
+<svg xmlns="http://www.w3.org/2000/svg" width="108" height="108" viewBox="29.25 27.5 54 54">
   
   <!-- Folder back with tab -->
   <path d="M35 35 H45.5 a3 3 0 0 1 2.12 0.88 L52 40 H71 a5 5 0 0 1 5 5 V52 H30 V40 a5 5 0 0 1 5 -5 Z" fill="#1557C0"/>
