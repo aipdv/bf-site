@@ -6,7 +6,7 @@ The app: https://github.com/aipdv/better-files
 
 ## Build
 
-Astro, static output. GSAP (ScrollSmoother, ScrollTrigger, ScrollToPlugin, SplitText) runs the page motion in `src/scripts/motion.ts`. Motion that the visitor drives (smooth scroll, link glides, the hero phone that shrinks on scroll, reveals, the video) runs for everyone. Motion that runs by itself (the hero rise-in, the phone typing loop) stops under `prefers-reduced-motion`. The video plays muted while in view and has a sound button. The other script is the Cloudflare Web Analytics beacon (no cookies).
+Astro, static output. GSAP (ScrollSmoother, ScrollTrigger, ScrollToPlugin, SplitText) runs the page motion in `src/scripts/motion.ts`. Motion that the visitor drives (smooth scroll, link glides, the hero phone that shrinks on scroll, reveals, the video) runs for everyone. Motion that runs by itself (the hero rise-in, the phone typing loop) stops under `prefers-reduced-motion`. The video plays muted while in view. It has sound, pause, and native full-screen controls. The other script is the Cloudflare Web Analytics beacon (no cookies).
 
 ```sh
 npm ci

@@ -1,7 +1,7 @@
 // Pages serves static files without byte-range support. Safari (macOS, iOS)
 // will not play a video unless the server answers Range requests with 206.
 // This function serves the launch video with Range support. It runs on the
-// server only; the page itself still ships no JavaScript.
+// server only and remains separate from the page motion.
 function sliceStream(body, start, end) {
   const reader = body.getReader();
   let offset = 0;
