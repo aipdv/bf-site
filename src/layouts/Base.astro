@@ -1,0 +1,69 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  frontmatter?: { title: string; description: string };
+}
+
+// Markdown pages (privacy.md) pass their frontmatter; .astro pages pass props.
+const fm = Astro.props.frontmatter;
+const { title, description } = fm ?? Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const download = 'https://github.com/aipdv/better-files/releases/latest';
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="theme-color" content="#F5F5F7" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content="https://bf.aipdv.com/og.png" />
+    <meta property="og:image:width" content="1280" />
+    <meta property="og:image:height" content="640" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content="https://bf.aipdv.com/og.png" />
+    <!-- "js": GSAP will run. "full": the visitor allows self-running motion. Undo both after 2.5 s if GSAP never loads. -->
+    <script is:inline>(()=>{const r=document.documentElement;r.classList.add('js');if(matchMedia('(prefers-reduced-motion: no-preference)').matches)r.classList.add('full');setTimeout(()=>{if(!r.classList.contains('motion-ready')){r.classList.remove('js','full');document.querySelectorAll('video').forEach(v=>v.controls=true)}},2500)})()</script>
+  </head>
+  <body>
+    <div class="edge" aria-hidden="true"></div>
+    <nav class="nav" aria-label="Main">
+      <a class="brand" href="/"><img src="/logo.svg" alt="" width="34" height="34" />Better Files</a>
+      <a class="nl" href="/#features">Features</a>
+      <a class="nl" href="/privacy/">Privacy</a>
+      <a class="nl" href="https://github.com/aipdv/better-files">GitHub</a>
+      <span class="sp"></span>
+      <a class="btn p sm" href={download}>Download</a>
+    </nav>
+
+    <div id="smooth-wrapper"><div id="smooth-content">
+    <main>
+      {fm ? <article class="prose"><slot /></article> : <slot />}
+    </main>
+
+    <footer class="foot">
+      <div class="foot-in">
+        <a class="brand" href="/"><img src="/logo.svg" alt="" width="28" height="28" />Better Files</a>
+        <p>Free and open source under the GPL-3.0. Based on <a href="https://github.com/zhanghai/MaterialFiles">Material Files</a>.</p>
+        <p>"Better Files" and the Better Files logo are trademarks of aipdv.</p>
+        <p class="links"><a href="/privacy/">Privacy</a><a href="https://github.com/aipdv/better-files">GitHub</a><a href={download}>Download</a></p>
+      </div>
+    </footer>
+    </div></div>
+
+    <!-- Cloudflare Web Analytics: no cookies. -->
+    <script is:inline defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "dcb9b799222e4caf9691b680f89f83a9"}'></script>
+  </body>
+</html>
