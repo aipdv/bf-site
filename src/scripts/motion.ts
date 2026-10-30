@@ -58,10 +58,11 @@ document.querySelectorAll<HTMLAnchorElement>('a[href="/"]').forEach((a) => {
 });
 
 // Hero: the phone starts huge and cropped by the fold, then shrinks into view as you scroll.
+// Desktop only. On phones the phone stays at scale 1, and pinning over native touch scroll jitters.
 const hero = document.querySelector<HTMLElement>('.hero');
 const stage = document.querySelector<HTMLElement>('[data-stage]');
 const heroText = gsap.utils.toArray<HTMLElement>('[data-reveal="hero"]');
-if (hero && stage) {
+if (hero && stage) gsap.matchMedia().add('(min-width: 861px)', () => {
   const PHONE_H = 660; // .rp height at scale 1
   const big = () => Math.max(1, Math.min(2.6, (innerWidth * 0.86) / 340));
   const small = () => Math.min(1, (innerHeight - NAV - 40) / PHONE_H);
@@ -77,7 +78,7 @@ if (hero && stage) {
     .fromTo(stage, { scale: big, y: 0 }, { scale: small, y: endY, ease: 'power1.inOut', duration: 1 }, 0)
     .to('.hero-copy', { autoAlpha: 0, y: -60, ease: 'power1.in', duration: 0.45 }, 0)
     .fromTo('[data-reveal="chip"]', { autoAlpha: 0, scale: 0.9 }, { autoAlpha: 1, scale: 1, stagger: 0.08, duration: 0.25, ease }, 0.72);
-}
+});
 
 // Self-running: the hero text rises in once on load.
 gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
@@ -88,7 +89,9 @@ gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
 const statement = document.querySelector<HTMLElement>('[data-reveal="words"]');
 if (statement) {
   const split = SplitText.create(statement, { type: 'words' });
-  gsap.fromTo(split.words, { opacity: 0.15 }, {
+  // Set the faint start first. fromTo left words the scroll had not reached at full opacity.
+  gsap.set(split.words, { opacity: 0.15 });
+  gsap.to(split.words, {
     opacity: 1, stagger: 0.1, ease: 'none',
     scrollTrigger: { trigger: statement, start: 'top 80%', end: 'bottom 45%', scrub: 1 },
   });
