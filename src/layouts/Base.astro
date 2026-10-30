@@ -1,5 +1,7 @@
 ---
 import '../styles/global.css';
+// Built asset (inlined or hashed), so a new logo shows at once. Browsers keep public/ files for 4 hours.
+import logo from '../assets/logo.svg?url';
 
 interface Props {
   title?: string;
@@ -40,7 +42,7 @@ const download = 'https://github.com/aipdv/better-files/releases/latest';
   <body>
     <div class="edge" aria-hidden="true"></div>
     <nav class="nav" aria-label="Main">
-      <a class="brand" href="/"><img src="/logo.svg" alt="" width="34" height="34" />Better Files</a>
+      <a class="brand" href="/"><img src={logo} alt="" width="34" height="34" />Better Files</a>
       <a class="nl" href="/#features">Features</a>
       <a class="nl" href="/privacy/">Privacy</a>
       <a class="nl" href="https://github.com/aipdv/better-files">GitHub</a>
@@ -55,7 +57,7 @@ const download = 'https://github.com/aipdv/better-files/releases/latest';
 
     <footer class="foot">
       <div class="foot-in">
-        <a class="brand" href="/"><img src="/logo.svg" alt="" width="28" height="28" />Better Files</a>
+        <a class="brand" href="/"><img src={logo} alt="" width="28" height="28" />Better Files</a>
         <p>Free and open source under the GPL-3.0. Based on <a href="https://github.com/zhanghai/MaterialFiles">Material Files</a>.</p>
         <p>"Better Files" and the Better Files logo are trademarks of aipdv.</p>
         <p class="links"><a href="/privacy/">Privacy</a><a href="https://github.com/aipdv/better-files">GitHub</a><a href={download}>Download</a></p>
