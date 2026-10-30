@@ -182,7 +182,11 @@ if (box && video) {
         const enterFullscreen = (video as HTMLVideoElement & { webkitEnterFullscreen?: () => void }).webkitEnterFullscreen;
         if (enterFullscreen) {
           fs.setAttribute('aria-label', 'Exit full screen');
-          enterFullscreen.call(video);
+          try {
+            enterFullscreen.call(video);
+          } catch {
+            fullscreenEnded();
+          }
         } else {
           fullscreenEnded();
         }
