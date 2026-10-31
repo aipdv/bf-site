@@ -73,6 +73,8 @@ export async function onRequest({ request, env }) {
   if (start > end || start >= size) {
     if (!bufferedBody) await asset.body?.cancel();
     headers.set('Content-Range', `bytes */${size}`);
+    // The 416 depends on the Range header, which is not in the cache key. Do not let a shared cache keep it.
+    headers.set('Cache-Control', 'no-store');
     return new Response(null, { status: 416, headers });
   }
   headers.set('Content-Range', `bytes ${start}-${end}/${size}`);
