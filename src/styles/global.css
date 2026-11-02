@@ -162,6 +162,7 @@ main { padding-top: 84px; }
 .foot-in .brand { color: var(--ink); font-size: 16px; margin-bottom: 12px; }
 .foot-in p { margin: 6px 0; }
 .foot-in .links { display: flex; gap: 18px; margin-top: 14px; }
+.foot-in .rel { flex-wrap: wrap; row-gap: 6px; }
 
 /* Privacy page */
 .prose { width: min(760px, calc(100% - 40px)); margin: 0 auto; padding: 72px 0 0; }
