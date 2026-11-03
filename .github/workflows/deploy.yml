@@ -6,7 +6,10 @@ on:
     branches: [main]
   pull_request:
   workflow_dispatch:
-  # Daily rebuild so the footer release list picks up new app releases.
+  # Sent by the app repo when a release is published, so the footer updates at once.
+  repository_dispatch:
+    types: [app-release]
+  # Daily rebuild as a fallback for the footer release list.
   schedule:
     - cron: '17 3 * * *'
 
