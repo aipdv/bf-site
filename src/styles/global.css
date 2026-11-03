@@ -162,7 +162,9 @@ main { padding-top: 84px; }
 .foot-in .brand { color: var(--ink); font-size: 16px; margin-bottom: 12px; }
 .foot-in p { margin: 6px 0; }
 .foot-in .links { display: flex; gap: 18px; margin-top: 14px; }
-.foot-in .rel { flex-wrap: wrap; row-gap: 6px; }
+.foot-in .rel-h { color: var(--ink); margin-top: 22px; }
+.foot-in .rel { list-style: none; margin: 6px 0 0; padding: 0; display: grid; gap: 6px; }
+.foot-in .rel span { opacity: 0.7; margin-right: 6px; }
 
 /* Privacy page */
 .prose { width: min(760px, calc(100% - 40px)); margin: 0 auto; padding: 72px 0 0; }
