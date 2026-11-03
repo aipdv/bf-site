@@ -18,7 +18,7 @@ npm run preview  # serves dist/ on http://localhost:4321
 
 Cloudflare Pages, project `better-files`, custom domain `bf.aipdv.com`.
 
-A merge to `main` deploys by itself: `.github/workflows/deploy.yml` builds and runs wrangler. Pull requests only build. The workflow uses the repo secrets `CLOUDFLARE_API_TOKEN` (Pages Write only, token "bf-site GitHub deploy") and `CLOUDFLARE_ACCOUNT_ID`.
+A merge to `main` deploys by itself: `.github/workflows/deploy.yml` builds and runs wrangler. Pull requests only build. A daily scheduled run also deploys `main`, so the footer release list (fetched from the GitHub API at build time) picks up new app releases. The workflow uses the repo secrets `CLOUDFLARE_API_TOKEN` (Pages Write only, token "bf-site GitHub deploy") and `CLOUDFLARE_ACCOUNT_ID`.
 
 Manual deploy, if Actions is down. The `cf` CLI cannot deploy to Pages, so use wrangler without adding it to the project:
 

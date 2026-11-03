@@ -14,6 +14,24 @@ const fm = Astro.props.frontmatter;
 const { title, description } = fm ?? Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const download = 'https://github.com/aipdv/better-files/releases/latest';
+
+// Release list for the footer, fetched at build time. The daily deploy run keeps it fresh.
+// If GitHub fails, the footer shows only "All releases" and the build goes on.
+let releases: { tag_name: string; html_url: string; published_at: string; draft: boolean; body: string | null }[] = [];
+try {
+  const token = process.env.GITHUB_TOKEN;
+  const res = await fetch('https://api.github.com/repos/aipdv/better-files/releases', {
+    headers: token ? { Authorization: `Bearer ${token}` } : {},
+    signal: AbortSignal.timeout(10_000),
+  });
+  if (res.ok) releases = (await res.json()).filter((r: typeof releases[0]) => !r.draft && r.published_at);
+} catch {}
+releases = releases.sort((a, b) => b.published_at.localeCompare(a.published_at)).slice(0, 5);
+// "Thu, 29 Oct 2026 ..." -> "29 Oct 2026"
+const day = (iso: string) => new Date(iso).toUTCString().slice(5, 16).replace(/^0/, '');
+// One-line note: the first plain line of the release body (skips headings and video links).
+const note = (body: string | null) =>
+  (body ?? '').split('\n').map((l) => l.trim()).find((l) => l && !l.startsWith('#') && !l.startsWith('http')) ?? '';
 ---
 <!doctype html>
 <html lang="en">
@@ -61,6 +79,9 @@ const download = 'https://github.com/aipdv/better-files/releases/latest';
         <p>Free and open source under the GPL-3.0. Based on <a href="https://github.com/zhanghai/MaterialFiles">Material Files</a>.</p>
         <p>"Better Files" and the Better Files logo are trademarks of aipdv.</p>
         <p class="links"><a href="/privacy/">Privacy</a><a href="https://github.com/aipdv/better-files">GitHub</a><a href={download}>Download</a></p>
+        <p class="rel-h">Releases</p>
+        <ul class="rel">{releases.map((r) => <li><a href={r.html_url}>{r.tag_name}</a> <span>{day(r.published_at)}</span> {note(r.body)}</li>)}</ul>
+        <p class="links"><a href="https://github.com/aipdv/better-files/releases">All releases</a></p>
       </div>
     </footer>
     </div></div>
