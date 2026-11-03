@@ -199,14 +199,12 @@ main { padding-top: 84px; }
 .full [data-reveal="hero"], .js [data-reveal="chip"] { opacity: 0; }
 
 /* Footer: one dark panel on every page. Call to action, then one line of links, then the legal line. */
-/* The panel spans the viewport with one 16px gutter on three sides. Its content lines up with the 1080px column. */
+/* A full-width sheet that sits on the bottom edge, round only at the top. Its content lines up with the 1080px column. */
 .foot {
-  --edge: 16px;
-  margin: var(--gap) var(--edge) var(--edge);
-  padding: clamp(64px, 9vw, 112px) max(clamp(22px, 4vw, 48px), calc((100% - var(--w)) / 2 - var(--edge))) 24px;
-  border-radius: 32px; background: var(--ink); color: var(--card); text-align: center;
+  margin-top: var(--gap);
+  padding: clamp(64px, 9vw, 112px) max(clamp(22px, 4vw, 48px), calc((100% - var(--w)) / 2)) 24px;
+  border-radius: 64px 64px 0 0; background: var(--ink); color: var(--card); text-align: center;
 }
-@media (max-width: 720px) { .foot { --edge: 10px; border-radius: 26px; } }
 .foot h2 { max-width: 760px; margin: 0 auto 36px; }
 .foot .acc { color: #7DB3FF; }
 .foot .btn.p { background: var(--card); color: var(--ink); }
