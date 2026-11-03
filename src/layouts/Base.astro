@@ -45,31 +45,44 @@ const releases = (await getReleases()).slice(0, 5);
     <script is:inline>(()=>{const r=document.documentElement;r.classList.add('js');if(matchMedia('(prefers-reduced-motion: no-preference)').matches)r.classList.add('full');setTimeout(()=>{if(!r.classList.contains('motion-ready')){r.classList.remove('js','full');document.querySelectorAll('video').forEach(v=>v.controls=true)}},2500)})()</script>
   </head>
   <body>
+    <a class="skip" href="#main">Skip to content</a>
     <div class="edge" aria-hidden="true"></div>
     <nav class="nav" aria-label="Main">
-      <a class="brand" href="/"><img src={logo} alt="" width="34" height="34" />Better Files</a>
+      <a class="brand" href="/" aria-label="Better Files home"><img src={logo} alt="" width="34" height="34" />Better Files</a>
       <a class="nl" href="/#features">Features</a>
       <a class="nl" href="/privacy/">Privacy</a>
       <a class="nl" href="/changelog/">Changelog</a>
       <a class="nl" href="https://github.com/aipdv/better-files">GitHub</a>
       <span class="sp"></span>
-      <a class="btn p sm" href={download}>Download</a>
+      <a class="btn p sm" href={download}><svg class="ico" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M224,144v64a8,8,0,0,1-8,8H40a8,8,0,0,1-8-8V144a8,8,0,0,1,16,0v56H208V144a8,8,0,0,1,16,0Zm-101.66,5.66a8,8,0,0,0,11.32,0l40-40a8,8,0,0,0-11.32-11.32L136,124.69V32a8,8,0,0,0-16,0v92.69L93.66,98.34a8,8,0,0,0-11.32,11.32Z"/></svg>Download</a>
     </nav>
 
     <div id="smooth-wrapper"><div id="smooth-content">
-    <main>
+    <main id="main">
       {fm ? <article class="prose"><slot /></article> : <slot />}
     </main>
 
     <footer class="foot">
       <div class="foot-in">
-        <a class="brand" href="/"><img src={logo} alt="" width="28" height="28" />Better Files</a>
-        <p>Free and open source under the GPL-3.0. Based on <a href="https://github.com/zhanghai/MaterialFiles">Material Files</a>.</p>
-        <p>"Better Files" and the Better Files logo are trademarks of aipdv.</p>
-        <p class="links"><a href="/privacy/">Privacy</a><a href="https://github.com/aipdv/better-files">GitHub</a><a href={download}>Download</a><a href="/changelog/">Changelog</a></p>
-        <p class="rel-h">Releases</p>
-        <ul class="rel">{releases.map((r) => <li><a href={r.html_url}>{r.tag_name}</a> <span>{formatDay(r.published_at)}</span> {firstLine(r.body)}</li>)}</ul>
-        <p class="links"><a href="/changelog/">Changelog</a><a href="https://github.com/aipdv/better-files/releases">All releases</a></p>
+        <div>
+          <a class="brand" href="/"><img src={logo} alt="" width="28" height="28" />Better Files</a>
+          <p>Free and open source under GPL-3.0.<br />Built on <a href="https://github.com/zhanghai/MaterialFiles">Material Files</a>.</p>
+          <p>"Better Files" and the Better Files logo are trademarks of aipdv.</p>
+        </div>
+        <nav aria-label="Footer">
+          <h2>Site</h2>
+          <ul class="nav-l">
+            <li><a href={download}>Download</a></li>
+            <li><a href="/changelog/">Changelog</a></li>
+            <li><a href="/privacy/">Privacy</a></li>
+            <li><a href="https://github.com/aipdv/better-files">GitHub</a></li>
+          </ul>
+        </nav>
+        <div>
+          <h2>Latest releases</h2>
+          <ul class="rel">{releases.map((r) => <li><a href={r.html_url}>{r.tag_name}</a><time datetime={r.published_at}>{formatDay(r.published_at)}</time><span>{firstLine(r.body)}</span></li>)}</ul>
+          <a class="all" href="/changelog/">Full changelog</a>
+        </div>
       </div>
     </footer>
     </div></div>
