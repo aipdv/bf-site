@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
-import { getReleases, formatDay, firstLine, sections } from '../lib/releases';
+import YouTube from '../components/YouTube.astro';
+import { getReleases, formatDay, firstLine, sections, youtubeId } from '../lib/releases';
 
 // Built at deploy time from the GitHub releases, newest first.
 const releases = await getReleases();
@@ -25,6 +26,7 @@ const download = 'https://github.com/aipdv/better-files/releases/latest';
           const secs = sections(r.body);
           const bullets = secs.filter((s) => /what/i.test(s.title)).flatMap((s) => s.items);
           const limits = secs.find((s) => /known limits/i.test(s.title))?.items ?? [];
+          const video = youtubeId(r.body);
           const apk = r.assets.find((a) => a.name.endsWith('.apk'))?.browser_download_url ?? r.html_url;
           return (
             <article class="entry">
@@ -38,6 +40,8 @@ const download = 'https://github.com/aipdv/better-files/releases/latest';
               </div>
               <div class="card">
                 <h2>{firstLine(r.body) || r.tag_name}</h2>
+
+                {video && <YouTube id={video} title={`${r.tag_name} video`} />}
 
                 {bullets.length > 0 && (
                   <ul>
@@ -87,6 +91,7 @@ const download = 'https://github.com/aipdv/better-files/releases/latest';
 
   .card h2 { font-size: clamp(22px, 2.6vw, 28px); letter-spacing: -0.025em; line-height: 1.15; margin: 0 0 20px; }
   .card > ul { margin-bottom: 8px; }
+  .card :global(.video) { margin: 0 0 24px; }
 
   .card details { border-top: 1px solid var(--line); margin-top: 24px; }
   .card summary { cursor: pointer; font-weight: 600; font-size: 15px; list-style: none; display: flex; align-items: center; gap: 8px; padding: 14px 0; }

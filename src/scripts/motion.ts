@@ -105,96 +105,12 @@ ScrollTrigger.batch('[data-reveal="up"]', {
   onEnter: (els) => gsap.to(els, { autoAlpha: 1, y: 0, stagger: 0.1, duration: 0.9, ease }),
 });
 
-// Video: no controls bar. It grows into place, plays muted while in view, pauses outside.
-// The first click on the playing video shows a pause button. A video paused by hand stays paused.
-const box = document.querySelector<HTMLElement>('.video');
-const video = box?.querySelector('video');
-if (box && video) {
-  const sound = box.querySelector<HTMLButtonElement>('.sound')!;
-  const pp = box.querySelector<HTMLButtonElement>('.pp')!;
-  const fs = box.querySelector<HTMLButtonElement>('.fs')!;
-  let userPaused = false;
-  let scrollPausing = false;
-  const toggle = () => {
-    if (video.paused) video.play().catch(() => {});
-    else video.pause();
-  };
-  const sync = () => {
-    pp.classList.toggle('paused', video.paused);
-    pp.setAttribute('aria-label', video.paused ? 'Play' : 'Pause');
-  };
-  video.addEventListener('play', () => {
-    userPaused = false;
-    sync();
-  });
-  video.addEventListener('pause', () => {
-    if (scrollPausing) scrollPausing = false;
-    else userPaused = true;
-    sync();
-  });
-
-  video.controls = false;
+// Video: the YouTube box grows into place as it scrolls in. YouTube draws its own controls.
+const box = document.querySelector<HTMLElement>('.vid .video');
+if (box) {
   gsap.fromTo(box, { scale: 0.82 }, {
     scale: 1, ease: 'none',
     scrollTrigger: { trigger: box, start: 'top bottom', end: 'center center', scrub: 1 },
-  });
-  ScrollTrigger.create({
-    trigger: box,
-    start: 'top 75%',
-    end: 'bottom 25%',
-    onToggle: (self) => {
-      if (self.isActive && !userPaused) video.play().catch(() => {});
-      else if (!self.isActive && !video.paused) {
-        scrollPausing = true;
-        video.pause();
-      }
-    },
-  });
-  video.addEventListener('click', () => {
-    if (video.paused && !userPaused) {
-      pp.hidden = false;
-      video.play().catch(() => {});
-    } else if (!video.paused && pp.hidden) {
-      pp.hidden = false;
-    } else {
-      toggle();
-    }
-  });
-  pp.addEventListener('click', toggle);
-  sound.addEventListener('click', () => {
-    video.muted = !video.muted;
-    sound.textContent = video.muted ? 'Tap for sound' : 'Sound on';
-    if (video.paused && !userPaused) video.play().catch(() => {});
-  });
-  const fullscreenEnded = () => {
-    video.controls = false;
-    fs.setAttribute('aria-label', 'Full screen');
-  };
-  document.addEventListener('fullscreenchange', () => {
-    if (document.fullscreenElement) fs.setAttribute('aria-label', 'Exit full screen');
-    else fullscreenEnded();
-  });
-  video.addEventListener('webkitendfullscreen', fullscreenEnded);
-  fs.addEventListener('click', () => {
-    if (document.fullscreenElement) document.exitFullscreen();
-    else {
-      video.controls = true;
-      if (video.requestFullscreen) {
-        video.requestFullscreen().catch(fullscreenEnded);
-      } else {
-        const enterFullscreen = (video as HTMLVideoElement & { webkitEnterFullscreen?: () => void }).webkitEnterFullscreen;
-        if (enterFullscreen) {
-          fs.setAttribute('aria-label', 'Exit full screen');
-          try {
-            enterFullscreen.call(video);
-          } catch {
-            fullscreenEnded();
-          }
-        } else {
-          fullscreenEnded();
-        }
-      }
-    }
   });
 }
 

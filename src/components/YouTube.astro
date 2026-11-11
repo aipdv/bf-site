@@ -1,0 +1,14 @@
+---
+// YouTube embed in the 4:3 video box. Privacy-enhanced domain: no YouTube cookies until play.
+const { id, title } = Astro.props as { id: string; title: string };
+---
+<div class="video">
+  <iframe
+    src={`https://www.youtube-nocookie.com/embed/${id}?rel=0`}
+    title={title}
+    loading="lazy"
+    allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen"
+    referrerpolicy="strict-origin-when-cross-origin"
+    allowfullscreen
+  ></iframe>
+</div>

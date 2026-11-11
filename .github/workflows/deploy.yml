@@ -34,6 +34,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - run: node tests/headers.test.mjs
+      - run: node tests/releases.test.mjs
       - name: Deploy to Cloudflare Pages
         if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
         run: npx --yes wrangler@4.156.0 pages deploy dist --project-name better-files --branch main

@@ -34,9 +34,13 @@ export async function getReleases(): Promise<Release[]> {
 // "Thu, 29 Oct 2026 ..." -> "29 Oct 2026"
 export const formatDay = (iso: string) => new Date(iso).toUTCString().slice(5, 16).replace(/^0/, '');
 
-// First plain line of the release body (skips headings and links).
+// First plain line of the release body (skips headings, links and images).
 export const firstLine = (body: string | null) =>
-  (body ?? '').split('\n').map((l) => l.trim()).find((l) => l && !l.startsWith('#') && !l.startsWith('http')) ?? '';
+  (body ?? '').split('\n').map((l) => l.trim()).find((l) => l && !/^(#|http|\[|!)/.test(l)) ?? '';
+
+// First YouTube video id in the release body (youtu.be/ID or youtube.com/watch?v=ID), or null.
+export const youtubeId = (body: string | null) =>
+  (body ?? '').match(/(?:youtu\.be\/|youtube\.com\/watch\?v=)([\w-]{11})/)?.[1] ?? null;
 
 // Markdown sections ("## Title") with their bullet items, markup stripped.
 export function sections(body: string | null): { title: string; items: string[] }[] {

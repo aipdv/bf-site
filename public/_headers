@@ -1,11 +1,12 @@
-# Browser security headers for every static page. Pages Functions (the video) do not get these.
+# Browser security headers for every static page.
+# frame-src allows the YouTube embeds (home page demo, changelog videos).
 # The CSP script hashes must match the build. tests/headers.test.mjs checks them in CI.
-# - sha256-dJj8...: the inline "js"/"full" class script in src/layouts/Base.astro.
+# - sha256-HutR...: the inline "js"/"full" class script in src/layouts/Base.astro.
 # - sha256-GZIc... with 'unsafe-hashes': the "return false" handlers in src/components/Phone.astro.
 # ponytail: style-src keeps 'unsafe-inline' because Phone.astro sets animation-delay in style attributes.
 /*
   Strict-Transport-Security: max-age=31536000; includeSubDomains
-  Content-Security-Policy: default-src 'self'; script-src 'self' 'sha256-dJj8dZKLMRsc4IoCg8wblQMewYPB8hayxI6pIW7FaKU=' 'unsafe-hashes' 'sha256-GZIcz60Uwd6wT3vaYke/atSr53TehbYAPepOa3d03Vw=' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' https://cloudflareinsights.com; frame-ancestors 'none'; base-uri 'self'; form-action 'none'; object-src 'none'
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'sha256-HutRbnaAD4qJXkchsusdXn2Jxj5vJXkR8KX1XYdDIBw=' 'unsafe-hashes' 'sha256-GZIcz60Uwd6wT3vaYke/atSr53TehbYAPepOa3d03Vw=' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' https://cloudflareinsights.com; frame-src https://www.youtube-nocookie.com; frame-ancestors 'none'; base-uri 'self'; form-action 'none'; object-src 'none'
   X-Frame-Options: DENY
   Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
   X-Content-Type-Options: nosniff

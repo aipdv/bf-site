@@ -37,7 +37,7 @@ const download = 'https://github.com/aipdv/better-files/releases/latest';
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content="https://bf.aipdv.com/og.png" />
     <!-- "js": GSAP will run. "full": the visitor allows self-running motion. Undo both after 2.5 s if GSAP never loads. -->
-    <script is:inline>(()=>{const r=document.documentElement;r.classList.add('js');if(matchMedia('(prefers-reduced-motion: no-preference)').matches)r.classList.add('full');setTimeout(()=>{if(!r.classList.contains('motion-ready')){r.classList.remove('js','full');document.querySelectorAll('video').forEach(v=>v.controls=true)}},2500)})()</script>
+    <script is:inline>(()=>{const r=document.documentElement;r.classList.add('js');if(matchMedia('(prefers-reduced-motion: no-preference)').matches)r.classList.add('full');setTimeout(()=>{if(!r.classList.contains('motion-ready')){r.classList.remove('js','full')}},2500)})()</script>
   </head>
   <body>
     <a class="skip" href="#main">Skip to content</a>
