@@ -6,7 +6,7 @@ The app: https://github.com/aipdv/better-files
 
 ## Build
 
-Astro, static output. GSAP (ScrollSmoother, ScrollTrigger, ScrollToPlugin, SplitText) runs the page motion in `src/scripts/motion.ts`. Motion that the visitor drives (smooth scroll, link glides, the hero phone that shrinks on scroll, reveals, the video) runs for everyone. Motion that runs by itself (the hero rise-in, the phone typing loop) stops under `prefers-reduced-motion`. The video plays muted while in view. It has sound, pause, and native full-screen controls. The other script is the Cloudflare Web Analytics beacon (no cookies).
+Astro, static output. GSAP (ScrollSmoother, ScrollTrigger, ScrollToPlugin, SplitText) runs the page motion in `src/scripts/motion.ts`. Motion that the visitor drives (smooth scroll, link glides, the hero phone that shrinks on scroll, reveals, the video) runs for everyone. Motion that runs by itself (the hero rise-in, the phone typing loop) stops under `prefers-reduced-motion`. The demo video is a YouTube embed (`src/components/YouTube.astro`). The other script is the Cloudflare Web Analytics beacon (no cookies).
 
 ```sh
 npm ci
@@ -27,7 +27,15 @@ npm run build
 npx wrangler pages deploy dist --project-name better-files --branch main
 ```
 
-`functions/better-files-launch.mp4.js` serves the video with byte ranges. Pages static files do not support ranges, and Safari needs them to play video.
+## Release videos
+
+Put a YouTube link in the GitHub release notes. The /changelog page embeds the first `youtu.be/ID` or `youtube.com/watch?v=ID` link it finds. A thumbnail link works on GitHub too:
+
+```md
+[![Watch the video](https://img.youtube.com/vi/ID/hqdefault.jpg)](https://youtu.be/ID)
+```
+
+To change the home page demo, change the `id` on `<YouTube>` in `src/pages/index.astro`.
 
 ## Privacy page
 
